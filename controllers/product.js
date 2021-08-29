@@ -33,6 +33,7 @@ module.exports = {
         throw new Error('Product is already existed')
       }
     } catch (err) {
+      console.log(err)
       return res.status(422).json({
         status: 'failed',
         message: err
@@ -74,15 +75,16 @@ module.exports = {
     try {
       let count = await Product.count()
       let page = await Math.floor(count / 5) + 1
+
       let products = await Product.findAll({
         attributes: {
           exclude: ['created_at', 'updated_at']
         },
-        limit: 5,
-        offset: (req.query.page - 1) * 5,
         order: [
           ['updated_at', 'DESC'],
-        ]
+        ],
+        offset: (req.query.page - 1) * 5,
+        limit: 5
       })
       return res.status(200).json({
         status: 'success',

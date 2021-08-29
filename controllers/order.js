@@ -5,33 +5,38 @@ const {
 module.exports = {
   async createorder(req, res) {
     let {
-      name,
-      price,
-      qty
+      amount,
+      product_id
     } = req.body
 
     try {
-      let order = await Order_transaction.findOne({
-        where: {
-          name
+      let order = await Order_transaction.findAll({
+        attributes: {
+          exclude: ['created_at', 'updated_at']
         }
       })
 
-      if (!order) {
-        let order = await Order_transaction.create({
-          name,
-          price,
-          qty
-        })
-        return res.status(201).json({
-          status: 'success',
-          result: {
-            order
-          }
+      if (order.length > 0) {
+        create_order = await Order_transaction.create({
+          order_id: order[order.length - 1].order_id += 1,
+          user_id: req.user.id,
+          product_id,
+          amount
         })
       } else {
-        throw new Error('order is already existed')
+        create_order = await Order_transaction.create({
+          order_id: 1,
+          user_id: req.user.id,
+          product_id,
+          amount
+        })
       }
+      return res.status(201).json({
+        status: 'success',
+        result: {
+          create_order
+        }
+      })
     } catch (err) {
       return res.status(422).json({
         status: 'failed',
@@ -41,26 +46,33 @@ module.exports = {
   },
   async updateorder(req, res) {
     let {
-      name,
-      price,
-      qty
+      amount,
+      product_id
     } = req.body
     try {
 
-      let order = await Order_transaction.update({
-        name,
-        price,
-        qty
-      }, {
+      let order = await Order_transaction.findOne({
         where: {
           id: req.params.id
+        },
+        attributes: {
+          exclude: ['created_at', 'updated_at']
+        }
+      })
+
+      let update_order = await Order_transaction.update({
+        amount,
+        product_id
+      }, {
+        where: {
+          order_id: order.order_id
         }
       })
 
       return res.status(200).json({
         status: 'success',
         result: {
-          order
+          update_order
         }
       })
     } catch (err) {
@@ -103,19 +115,19 @@ module.exports = {
     try {
       let order = await Order_transaction.findOne({
         where: {
-            id: req.params.id
+          id: req.params.id
         },
         attributes: {
-            exclude: ['created_at', 'updated_at']
+          exclude: ['created_at', 'updated_at']
         }
-    })
+      })
 
-    return res.status(200).json({
-      status: 'success',
-      result: {
-        order
-      }
-    })
+      return res.status(200).json({
+        status: 'success',
+        result: {
+          order
+        }
+      })
     } catch (err) {
       return res.status(422).json({
         status: 'failed',
@@ -124,16 +136,25 @@ module.exports = {
     }
   },
   async deleteorder(req, res, next) {
-    try {  
-        let order = await Order_transaction.destroy({
-          where: {
-            id: req.params.id
-          },
-        })
+    try {
+      let order = await Order_transaction.findOne({
+        where: {
+          id: req.params.id
+        },
+        attributes: {
+          exclude: ['created_at', 'updated_at']
+        }
+      })
 
-        return res.status(200).json({
-          status: 'success deleted'
-        })
+      let delete_order = await Order_transaction.destroy({
+        where: {
+          order_id: order.order_id
+        },
+      })
+
+      return res.status(200).json({
+        status: 'success deleted'
+      })
     } catch (err) {
       return res.status(422).json({
         status: 'failed',

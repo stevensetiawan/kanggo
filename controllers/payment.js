@@ -1,37 +1,36 @@
 const {
-  Payment
+  Payment,
+  Order_transaction
 } = require('../models')
 
 module.exports = {
   async createPayment(req, res) {
     let {
-      name,
-      price,
-      qty
+      amount,
+      order_id
     } = req.body
 
     try {
-      let payment = await Payment.findOne({
-        where: {
-          name
-        }
-      })
-
-      if (!payment) {
         let payment = await Payment.create({
-          name,
-          price,
-          qty
+          order_id,
+          status: "paid",
+          amount
         })
+
+        let update_order = await Order_transaction.update({
+          status: "paid"
+        }, {
+          where: {
+            order_id
+          }
+        })
+
         return res.status(201).json({
           status: 'success',
           result: {
             payment
           }
         })
-      } else {
-        throw new Error('Payment is already existed')
-      }
     } catch (err) {
       return res.status(422).json({
         status: 'failed',
@@ -41,16 +40,16 @@ module.exports = {
   },
   async updatePayment(req, res) {
     let {
-      name,
-      price,
-      qty
+      amount,
+      order_id,
+      status
     } = req.body
     try {
 
       let payment = await Payment.update({
-        name,
-        price,
-        qty
+        amount,
+        order_id,
+        status
       }, {
         where: {
           id: req.params.id

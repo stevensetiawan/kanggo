@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const app = express()
 const cors = require('cors')
 const router = require('./routes');
@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 app.use(cors())
 
 app.use(express.json());
-if (process.env.NODE_ENV !== 'test')
-  app.use(morgan('dev'));
+// if (process.env.NODE_ENV !== 'test')
+// app.use(morgan('dev'));
 
 app.use(express.urlencoded({ extended: true }))
 

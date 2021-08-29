@@ -8,11 +8,14 @@ const axios = require('axios')
 module.exports = {
   async register(req, res) {
     let {
-      email,
+      email ,
       password,
       name
     } = req.body
-    try {
+
+    try {  
+      console.log("masuk ga?")
+      console.log(email,password,name)
       let user = await User.create({
         email,
         password,
@@ -33,8 +36,11 @@ module.exports = {
         }
       })
     } catch (err) {
+      console.log(err)
+      console.log('masuk sini')
       return res.status(400).json({
-        status: 'register failed'
+        status: 'register failed',
+        message: err
       });
 
     }
@@ -60,22 +66,21 @@ module.exports = {
         })
 
         user = user.entity
-        
+
         return res.status(200).json({
           status: 'success',
           result: {
-            user,
             token
           }
         })
       } else {
         return res.status(401).json({
-          status: 'wrong password'
+          status: 'wrong email or password'
         });
       }
     } catch {
       return res.status(422).json({
-        status: 'email or password is wrong'
+        status: 'wrong email or password'
       });
     }
   }

@@ -55,10 +55,22 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    tableName: 'Users',
     underscored: true,
     hooks: {
       beforeCreate: (user, options) => {
         user.password = bcrypt.hasher(user.password)
+      }
+    }
+  });
+
+  // getter for public 
+  Object.defineProperty(User.prototype, 'entity', {
+    get() {
+      return {
+        id: this.id,
+        email: this.email,
+        name: this.name
       }
     }
   });

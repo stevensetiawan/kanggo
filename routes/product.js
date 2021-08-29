@@ -1,11 +1,11 @@
 const router = require('express').Router()
 const product = require('../controllers/product')
-const authentication = require('../middlewares/passport-http-bearer').authentication
+const authentication = require('../middlewares/authentication')
 
 router.use(authentication)
-router.get('/products', product.getAllProduct)
-router.get('/product/:id', product.getOneProduct)
-router.post('/create/:id', product.createProduct)
+router.get('/list', product.getAllProduct)
+router.get('/detail/:id', product.getOneProduct)
+router.post('/create', product.createProduct)
 router.put('/update/:id', product.updateProduct)
 router.delete('/delete/:id', product.deleteProduct)
 

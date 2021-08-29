@@ -4,6 +4,8 @@ const product = require('./product')
 const order = require('./order')
 const payment = require('./payment')
 
+console.log("masuk sini")
+
 router.use('/user', user)
 router.use('/product', product)
 router.use('/order', order)
