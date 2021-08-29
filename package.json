@@ -1,0 +1,40 @@
+{
+  "name": "kanggo",
+  "version": "1.0.0",
+  "description": "kanggo project",
+  "main": "bin/www",
+  "scripts": {
+    "start": "node bin/www",
+    "dev": "nodemon bin/www",
+    "test": "jest --forceExit --detectOpenHandles --ci --collectCoverage --coverageReporters=text-summary",
+    "migrate": "node_modules/sequelize-cli/lib/sequelize db:migrate",
+    "seed": "node_modules/sequelize-cli/lib/sequelize db:seed:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevensetiawan/kanggo.git"
+  },
+  "keywords": [],
+  "author": "steven",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stevensetiawan/kanggo/issues"
+  },
+  "homepage": "https://github.com/stevensetiawan/kanggo#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "faker": "^5.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.0",
+    "passport": "^0.4.1",
+    "passport-http-bearer": "^1.0.1",
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0",
+    "socket.io": "^4.1.3"
+  }
+}
