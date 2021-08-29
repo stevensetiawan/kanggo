@@ -23,12 +23,15 @@ module.exports = {
     }
   },
   production: {
-    use_env_variable: 'mysql://b8bd5aadbe644c:17e14fe0@us-cdbr-east-04.cleardb.com/heroku_e7fd9b8bb7c853b?reconnect=true',
-    dialectOptions: {
-      ssl: {
-          require: true,
-          rejectUnauthorized: false
-      }
+    username: "psljqmyhdp5es082",
+    password: "zx2jf15r7katt0me",
+    database: `kdrm3lf6etdud12v`,
+    host: "s29oj5odr85rij2o.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    dialect: "mysql",
+    logging: false,
+    define:{
+      createdAt: 'created_at',
+      updatedAt: 'updated_at'
     }
   }
 }
