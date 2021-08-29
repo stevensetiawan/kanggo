@@ -22,13 +22,16 @@ module.exports = {
       updatedAt: 'updated_at'
     }
   },
-  production: {
-    use_env_variable: 'DATABASE_URL',
-    // dialectOptions: {
-    //   ssl: {
-    //       require: true,
-    //       rejectUnauthorized: false
-    //   }
-    // }
+  production: {    
+    username: "b8bd5aadbe644c",
+    password: "17e14fe0",
+    database: `kanggo`,
+    host: "us-cdbr-east-04.cleardb.com",
+    dialect: "mysql",
+    logging: false,
+    define:{
+      createdAt: 'created_at',
+      updatedAt: 'updated_at'
+    }
   }
 }
